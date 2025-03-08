@@ -4,8 +4,7 @@ const RecipeSchema = new mongoose.Schema({
   title: String,
   ingredients: [String],
   instructions: String,
-  category: String,
-  userId: mongoose.Schema.Types.ObjectId,
+  image: String, // <-- Added field for image URL
 });
 
 module.exports = mongoose.model("Recipe", RecipeSchema);

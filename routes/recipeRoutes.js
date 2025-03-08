@@ -1,8 +1,22 @@
 const express = require("express");
-const { getRecipes, createRecipe } = require("../controllers/recipeController");
+const upload = require("../middleware/upload.js");
+const {
+  getRecipes,
+  getRecipeById,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
+  getRandomRecipe,
+} = require("../controllers/recipeController");
 
 const router = express.Router();
-router.get("/", getRecipes);
-router.post("/", createRecipe);
+
+// ✅ Recipe Routes
+router.get("/", getRecipes); // Get all recipes
+router.get("/random", getRandomRecipe); // Get a random recipe
+router.get("/:id", getRecipeById); // Get recipe by ID
+router.post("/", upload.single("image"), createRecipe); // Create recipe with image
+router.put("/:id", upload.single("image"), updateRecipe); // Update recipe
+router.delete("/:id", deleteRecipe); // Delete recipe
 
 module.exports = router;

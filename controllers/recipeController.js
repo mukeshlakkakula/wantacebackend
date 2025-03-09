@@ -1,6 +1,5 @@
 const Recipe = require("../models/Recipe");
 
-// ✅ Fetch All Recipes
 exports.getRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find();
@@ -10,7 +9,6 @@ exports.getRecipes = async (req, res) => {
   }
 };
 
-// ✅ Fetch a Single Recipe
 exports.getRecipeById = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
@@ -21,21 +19,20 @@ exports.getRecipeById = async (req, res) => {
   }
 };
 
-// ✅ Create a Recipe (Upload Image to Cloudinary)
 exports.createRecipe = async (req, res) => {
   try {
     const { title, ingredients, instructions } = req.body;
 
     let imageUrl = "";
     if (req.file) {
-      imageUrl = req.file.path; // ✅ Cloudinary returns image URL here
+      imageUrl = req.file.path;
     }
 
     const recipe = await Recipe.create({
       title,
-      ingredients: ingredients.split(","), // Convert string to array
+      ingredients: ingredients.split(","),
       instructions,
-      image: imageUrl, // ✅ Store Cloudinary image URL in DB
+      image: imageUrl,
     });
 
     res.status(201).json(recipe);
@@ -44,23 +41,22 @@ exports.createRecipe = async (req, res) => {
   }
 };
 
-// ✅ Update a Recipe (Handle Image Update in Cloudinary)
 exports.updateRecipe = async (req, res) => {
   try {
     const { title, ingredients, instructions } = req.body;
-    let imageUrl = req.body.image; // Keep old image if not updated
+    let imageUrl = req.body.image;
 
     if (req.file) {
-      imageUrl = req.file.path; // ✅ Use new Cloudinary image URL
+      imageUrl = req.file.path;
     }
 
     const updatedRecipe = await Recipe.findByIdAndUpdate(
       req.params.id,
       {
         title,
-        ingredients: ingredients.split(","), // Convert to array
+        ingredients: ingredients.split(","),
         instructions,
-        image: imageUrl, // ✅ Updated Image URL
+        image: imageUrl,
       },
       { new: true }
     );
@@ -75,7 +71,6 @@ exports.updateRecipe = async (req, res) => {
   }
 };
 
-// ✅ Delete a Recipe
 exports.deleteRecipe = async (req, res) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(req.params.id);
@@ -88,7 +83,6 @@ exports.deleteRecipe = async (req, res) => {
   }
 };
 
-// ✅ "Surprise Me" - Fetch a Random Recipe
 exports.getRandomRecipe = async (req, res) => {
   try {
     const recipes = await Recipe.find();

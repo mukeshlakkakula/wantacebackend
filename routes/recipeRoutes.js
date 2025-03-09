@@ -11,12 +11,11 @@ const {
 
 const router = express.Router();
 
-// ✅ Recipe Routes
-router.get("/", getRecipes); // Get all recipes
-router.get("/random", getRandomRecipe); // Get a random recipe
-router.get("/:id", getRecipeById); // Get recipe by ID
-router.post("/", upload.single("image"), createRecipe); // Create recipe with image
-router.put("/:id", upload.single("image"), updateRecipe); // Update recipe
-router.delete("/:id", deleteRecipe); // Delete recipe
+router.get("/", getRecipes);
+router.get("/random", getRandomRecipe);
+router.get("/:id", getRecipeById);
+router.post("/", upload.single("image"), createRecipe);
+router.put("/:id", upload.single("image"), updateRecipe);
+router.delete("/:id", deleteRecipe);
 
 module.exports = router;
